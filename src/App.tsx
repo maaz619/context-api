@@ -1,16 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./App.css";
-import Child from "./Child";
-import { UserContext } from "./Context";
+import TodoContextProvider, { TodoContext } from "./ThemeContext";
 
-function App() {
+const App = () => {
+  const { todos, addTodo } = useContext(TodoContext);
   return (
     <div className="App">
-      <UserContext.Provider value={{ name: "clove", email: "clove@gmail.com" }}>
-        <Child />
-      </UserContext.Provider>
+      <TodoContextProvider>
+        <div>
+          <div>
+            {todos.map((todo, i) => (
+              <div key={i}>{todo}</div>
+            ))}
+          </div>
+          <button onClick={() => addTodo("new todo")}>Add todo</button>
+        </div>
+      </TodoContextProvider>
     </div>
   );
-}
+};
 
 export default App;
